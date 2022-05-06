@@ -17,7 +17,6 @@ router.get('/protectedResource', passport.authenticate('jwt', { session: false }
     res.status(200).json({ success: true, msg: "You are successfully authenticated to this route!"});
 });
 
-
 router.post('/register',(req, res, next) => {
     try{
         insert(req,res).then(()=>{

@@ -8,11 +8,13 @@ const pathToKey = path.join(__dirname.replace("dist","src"), '..', 'id_rsa_priv.
 const PRIV_KEY = fs.readFileSync(pathToKey, 'utf8');
 
 export const issueJWT = function(user){
-    const id = user.username;
+    const name = user.username;
+    const id = user.id;
     const expiresIn = '1d';
 
     const payload = {
         sub : id,
+        subName: name,
         issuedDate : Date.now()
     };
     //console.log("check all",pathToKey," : ",payload.sub," : ",payload.issuedDate," : ",PUB_KEY);

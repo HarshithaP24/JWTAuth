@@ -47,7 +47,7 @@ router.post('/register', function (req, res, next) {
     try {
         (0, _userQuery.insert)(req, res).then(function () {});
         var result = (0, _userQuery.insertInto)(req, res);
-        console.log("success", result);
+        //console.log("success",result);
         res.json({ success: true, msg: "User Registered Successfully", userId: req.body.id });
     } catch (err) {
         res.json({ sucess: false, msg: err });

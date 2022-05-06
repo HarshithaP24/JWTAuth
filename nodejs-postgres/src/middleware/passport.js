@@ -10,15 +10,18 @@ const PUB_KEY = fs.readFileSync(pathToKey, 'utf8');
 const options = {
     jwtFromRequest : ExtractJwt.fromAuthHeaderAsBearerToken(),
     secretOrKey : PUB_KEY,
-    algorithms : 'RS256'
+    algorithms : 'RS256',
+    passReqToCallback: true
 }
 //console.log("check options: ",options.jwtFromRequest," : ",options.secretOrKey);
 
-export const strategy = new JwtStrategy(options,function(jwtPayload, done){
+export const strategy = new JwtStrategy(options,function(req, jwtPayload, done){
     console.log("------- Using Custom Strategy --------")
-    console.log(jwtPayload);
+    console.log("check req url: ",req.route.path); //displays the protectedResource url using this strategy
+    console.log("check jwtPayload: ",jwtPayload);
+
     let user = {
-        username: jwtPayload.sub
+        username: jwtPayload.subName
     }
     try{
         getUser(user,function(result){

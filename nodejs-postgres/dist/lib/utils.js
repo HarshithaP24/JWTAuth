@@ -25,15 +25,17 @@ var pathToKey = _path2.default.join(__dirname.replace("dist", "src"), '..', 'id_
 var PRIV_KEY = _fs2.default.readFileSync(pathToKey, 'utf8');
 
 var issueJWT = exports.issueJWT = function issueJWT(user) {
-    var id = user.username;
+    var name = user.username;
+    var id = user.id;
     var expiresIn = '1d';
 
     var payload = {
         sub: id,
+        subName: name,
         issuedDate: Date.now()
     };
     //console.log("check all",pathToKey," : ",payload.sub," : ",payload.issuedDate," : ",PUB_KEY);
-    var signedToken = _jsonwebtoken2.default.sign(payload, PRIV_KEY, { expiresIn: expiresIn, algorithm: 'RS256' }); // { expiresIn: expiresIn, algorithm: 'RS256' } mentioning to sign using algrthm RS256
+    var signedToken = _jsonwebtoken2.default.sign(payload, PRIV_KEY, { expiresIn: expiresIn, algorithm: 'RS256' }); // mentioning to sign using algrthm RS256
     return {
         token: 'bearer ' + signedToken,
         expiresIn: expiresIn

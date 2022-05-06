@@ -29,14 +29,17 @@ var PUB_KEY = _fs2.default.readFileSync(pathToKey, 'utf8');
 var options = {
     jwtFromRequest: _lib.ExtractJwt.fromAuthHeaderAsBearerToken(),
     secretOrKey: PUB_KEY,
-    algorithms: 'RS256'
+    algorithms: 'RS256',
+    passReqToCallback: true
     //console.log("check options: ",options.jwtFromRequest," : ",options.secretOrKey);
 
-};var strategy = exports.strategy = new _strategy2.default(options, function (jwtPayload, done) {
+};var strategy = exports.strategy = new _strategy2.default(options, function (req, jwtPayload, done) {
     console.log("------- Using Custom Strategy --------");
-    console.log(jwtPayload);
+    console.log("check req url: ", req.route.path);
+    console.log("check jwtPayload: ", jwtPayload);
+
     var user = {
-        username: jwtPayload.sub
+        username: jwtPayload.subName
     };
     try {
         (0, _userQuery.getUser)(user, function (result) {

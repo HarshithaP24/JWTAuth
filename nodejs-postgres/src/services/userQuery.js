@@ -5,8 +5,11 @@ import { client } from "../app";
 export const getQuery = function(req, res){
     // client.connect();
     client
-        .query('Select * from eg_test_user_table')
+        .query('select roles.role_code, users.id, users.username, users.tenantid from public.eg_test_userrole_v1 as roles inner join public.eg_test_user_table as users on roles.user_id = users.id')
         .then(result => {
+            // let responseJosn={};
+            // result.rows.forEach(obj => {
+            // })
             res.send(result.rows);
             console.log("query run successfully");
         })

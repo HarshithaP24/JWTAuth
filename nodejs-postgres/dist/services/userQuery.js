@@ -17,7 +17,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var getQuery = exports.getQuery = function getQuery(req, res) {
     // client.connect();
-    _app.client.query('Select * from eg_test_user_table').then(function (result) {
+    _app.client.query('select roles.role_code, users.id, users.username, users.tenantid from public.eg_test_userrole_v1 as roles inner join public.eg_test_user_table as users on roles.user_id = users.id').then(function (result) {
+        // let responseJosn={};
+        // result.rows.forEach(obj => {
+        // })
         res.send(result.rows);
         console.log("query run successfully");
     }).catch(function (err) {
@@ -64,7 +67,6 @@ var insertInto = exports.insertInto = function insertInto(req, res) {
             res = _app.client.query(insertQuery);
         });
     });
-
     return res;
 };
 
